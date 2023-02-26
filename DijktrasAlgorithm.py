@@ -7,27 +7,27 @@ import matplotlib.font_manager
 for font in matplotlib.font_manager.fontManager.ttflist:
     print(font.name) """
 
-fig = plt.figure(figsize=(8, 6))
+fig = plt.figure(figsize=(10, 8))
 ax = fig.add_subplot(111)
 
 tablaDijkstra = [
-    ["A", 0, None],
+    ["A",           0, None],
     ["B", sys.maxsize, None],
     ["C", sys.maxsize, None],
     ["D", sys.maxsize, None],
     ["E", sys.maxsize, None],
-    ["F", sys.maxsize, None]
+    ["F", sys.maxsize, None],
+    ["G", sys.maxsize, None]
 ]
 nodosPesos = [
-    ["A", "B", 2],
-    ["A", "D", 8],
-    ["B", "D", 5],
-    ["B", "E", 6],
-    ["D", "E", 3],
-    ["D", "F", 2],
-    ["E", "F", 1],
-    ["E", "C", 9],
-    ["F", "C", 3]
+    ["A", "B",  2],
+    ["A", "C",  6],
+    ["B", "D",  5],
+    ["C", "D",  8],
+    ["D", "E", 15],
+    ["D", "F", 10],
+    ["E", "G",  6],
+    ["F", "G",  2]
 ]
 def dijkstra(origen, destino, pesoAcumulado):
     # parametro de salida de la recursividad
@@ -69,8 +69,8 @@ def dijkstra(origen, destino, pesoAcumulado):
 
 
 # llamar el algoritmo de Dijkstra (con A como origen, con C como destino, 0 como acumulador inicial)
-origen = "A"
-destino = "C"
+origen  = "A"
+destino = "G"
 dijkstra(origen, destino, 0)
 
 # obtener una lista que nos definira el camino final mas optimo
@@ -90,7 +90,6 @@ tuplas = [(camino[i], camino[i+1]) for i in range(len(camino)-1)]
 #[('A', 'B'), ('B', 'D'), ('D', 'F'), ('F', 'C')]
 # ------------------------------------------------------------------------------------
 G = nx.Graph()
-G.graph["Name"] = "ay que cambiarlo"
 
 G.add_nodes_from([
     ("A", {"Label":"A"}),
@@ -98,35 +97,39 @@ G.add_nodes_from([
     ("C", {"Label":"C"}),
     ("D", {"Label":"D"}),
     ("E", {"Label":"E"}),
-    ("F", {"Label":"F"})
+    ("F", {"Label":"F"}),
+    ("G", {"Label":"G"})
 ])
 
 G.add_edges_from([
-    ("A", "B", {"weight": 2}),
-    ("A", "D", {"weight": 8}),
-    ("B", "D", {"weight": 5}),
-    ("B", "E", {"weight": 6}),
-    ("D", "E", {"weight": 3}),
-    ("D", "F", {"weight": 2}),
-    ("E", "F", {"weight": 1}),
-    ("E", "C", {"weight": 9}),
-    ("F", "C", {"weight": 3})
+    ("A", "B", {"weight":  2}),
+    ("A", "C", {"weight":  6}),
+    ("B", "D", {"weight":  5}),
+    ("C", "D", {"weight":  8}),
+    ("D", "E", {"weight": 15}),
+    ("D", "F", {"weight": 10}),
+    ("E", "G", {"weight":  6}),
+    ("F", "G", {"weight":  2}),
+
 ])
-#edges = [(u, v) for u, v, d in G.edges(data=True)]
+
+edges = [(u, v) for u, v, d in G.edges(data=True)]
+print(edges)
 #no entiendo porque los desordena imprime: [('A', 'B'), ('A', 'D'), ('B', 'D'), ('B', 'E'), ('C', 'E'), ('C', 'F'), ('D', 'E'), ('D', 'F'), ('E', 'F')]
 
 
 edgesQueSiFunciona = [
-    ('A', 'B'), ('A', 'D'), ('B', 'D'), ('B', 'E'), ('E', 'C'), ('F', 'C'), ('D', 'E'), ('D', 'F'), ('E', 'F')
+    ('A', 'B'), ('A', 'C'), ('B', 'D'), ('C', 'D'), ('D', 'E'), ('D', 'F'), ('E', 'G'), ('F', 'G')
 ]
 
 pos = {
-    "A": (1, 7),
-    "B": (3, 11),
-    "C": (9, 7),
-    "D": (3, 3),
-    "E": (6, 11),
-    "F": (6, 3) 
+    "A": (0 , 4),
+    "B": (3 , 8),
+    "C": (3 , 0),
+    "D": (6 , 4),
+    "F": (9 , 0),
+    "E": (9 , 8),
+    "G": (12, 4) 
 }
 
 
