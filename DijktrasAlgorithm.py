@@ -7,6 +7,8 @@ import matplotlib.font_manager
 for font in matplotlib.font_manager.fontManager.ttflist:
     print(font.name) """
 
+# un comentario de prueba
+
 fig = plt.figure(figsize=(10, 8))
 ax = fig.add_subplot(111)
 
